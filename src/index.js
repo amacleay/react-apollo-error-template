@@ -2,21 +2,26 @@ import "./index.css";
 
 import React from "react";
 import { render } from "react-dom";
-import { ApolloClient } from "apollo-client";
-import { ApolloProvider } from "react-apollo";
-import { InMemoryCache } from "apollo-cache-inmemory";
+import { MockedProvider } from "react-apollo/test-utils";
 
-import { link } from "./graphql/link";
-import App from "./App";
+import App, { QUERY } from "./App";
 
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link,
-});
-
+const people = [
+  { id: 1, name: 'John Smith' },
+  { id: 2, name: 'Sara Smith' },
+  { id: 3, name: 'Budd Deey' },
+];
 render(
-  <ApolloProvider client={client}>
+  <MockedProvider
+    mocks={[
+      {
+        request: { query: QUERY, variables: {} },
+        result: { data: { people }},
+      }
+    ]}
+    addTypename={false}
+  >
     <App />
-  </ApolloProvider>,
+  </MockedProvider>,
   document.getElementById("root")
 );
