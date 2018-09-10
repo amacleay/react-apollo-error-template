@@ -1,5 +1,5 @@
 import React from "react";
-import { Query } from "react-apollo";
+import { Mutation, Query } from "react-apollo";
 import gql from "graphql-tag";
 
 const QUERY = gql`
@@ -20,6 +20,23 @@ const MUTATION = gql`
   }
 `;
 
+const Deletor = () => (
+  <Mutation mutation={MUTATION}>
+    {(mutation, result) => {
+      const { error, loading, data, called } = result;
+      if (error) {
+        return <p>{error.message}</p>;
+      }
+      if (loading) {
+        return <p>loading</p>;
+      }
+      if (called) {
+        return <p>called</p>;
+      }
+      return <button onClick={mutation}>Click me to remove one</button>;
+    }}
+  </Mutation>
+);
 const App = () => (
   <Query query={QUERY}>
     {(result) => {
@@ -50,6 +67,7 @@ const App = () => (
               {data.people.map(person => <li key={person.id}>{person.name}</li>)}
             </ul>
           )}
+          <Deletor />
         </main>
       )}} 
     </Query>
