@@ -1,3 +1,15 @@
+# The error
+
+[errorPolicy all in defaultOptions causes error to be undefined](https://github.com/apollographql/react-apollo/issues/2253)
+
+To see this in action:
+
+* Open the app
+* Click the button - this dispatches a mutation which induces a graphql error
+* Note that no error handler appears
+
+To see the error handler working, modify `src/index.js` to no longer set `defaultOptions`.
+
 # Apollo Client Error Template
 
 Welcome! If you are here then you were likely referred to this repo when reporting an error to [`apollographql/apollo-client`][1]. The core team is invested in making the best client for GraphQL possible, so when you hit an error it is important to the team that the error is resolved as soon as possible.
